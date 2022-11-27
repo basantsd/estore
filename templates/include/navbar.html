@@ -1,0 +1,65 @@
+{% load static %}
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-7">
+                    <div class="header__top__left">
+                        <p>Free shipping, 30-day return or refund guarantee.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-5">
+                    <div class="header__top__right">
+                        <div class="header__top__links">
+                            {% if request.user.is_authenticated and not request.user.is_staff %}
+                            <a href="{% url 'logout' %}">Logout</a><span class="text-white">|</span> &nbsp;&nbsp;
+                            <a href="{% url 'profile' %}">My Account</a>
+                            {% else %}
+                            <a href="{% url 'login' %}">Sign in</a><span class="text-white">|</span> &nbsp;&nbsp;
+                            <a href="{% url 'register' %}">Sign up</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a href="{% url 'home' %}"><img src="{% get_static_prefix %}img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li {% if request.path == "/" %} class="active" {% endif %}><a href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li {% if request.path == "/shop/" %} class="active" {% endif %}><a
+                                href="{% url 'shop' %}">Shop</a></li>
+                        <li {% if request.path == "/about/" %} class="active" {% endif %}><a
+                                href="{% url 'about' %}">About</a> </li>
+                        <li {% if request.path == "/blog/" %} class="active" {% endif %}><a href="./blog.html">Blog</a>
+                        </li>
+                        <li {% if request.path == "/contact/" %} class="active" {% endif %}><a
+                                href="./contact.html">Contacts</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option">
+                    <a href="#" class="search-switch"><img src="{% get_static_prefix %}img/icon/search.png" alt=""></a>
+                    <a href="#"><img src="{% get_static_prefix %}img/icon/heart.png" alt=""></a>
+                    <a href="{% url 'cart' %}"><img src="{% get_static_prefix %}img/icon/cart.png" alt="">
+                        <span>0</span></a>
+                    <div class="price">$0.00</div>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open"><i class="fa fa-bars"></i></div>
+    </div>
+</header>
+<!-- Header Section End -->

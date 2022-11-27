@@ -1,0 +1,15 @@
+name : {{customer.first_name}} {{customer.last_name}}<br>
+email : {{customer.user.email}}
+
+<table>
+    {% for ord in order %}
+    <tr>
+        <td>{{ord.id}}</td>
+        <td>{{ord.shipping_address}}</td>
+        <td>{{ord.mobile}}</td>
+        <td>{{ord.total}}</td>
+        <td>{{ord.created_at|timesince}} ago</td>
+        <td>{{ord.order_status}}</td>
+    </tr>
+    {% endfor %}
+</table>

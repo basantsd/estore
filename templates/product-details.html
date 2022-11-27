@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{{product.title}}{% endblock title %}
+
+{% block mainbody %}
+{% load static %}
+<h3>Proctuct : {{product.title}}</h3>
+<div class="row">
+    <div class="col-md-6">
+        <img src="{% get_media_prefix %}{{product.image}}">
+    </div>
+    <div class="col-md-6">
+        <h4>{{product.title}}</h4>
+        <h5>Category : {{product.category}}</h5>
+        <h5>Price : <strike>Rs. {{product.marked_price}}</strike> <strong>Rs. {{product.selling_price}}</strong></h5>
+        <a href="{% url 'cart' product.id %}" class="btn btn-info">Add To Cart</a>
+        <p>{{product.description}}</p>
+    </div>
+</div>
+
+{% endblock mainbody %}

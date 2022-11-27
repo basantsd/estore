@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+All Products
+{% endblock title %}
+
+{% block mainbody %}
+{% load static %}
+<div class="container">
+    <h1>All Products</h1>
+    <hr>
+    {% for cate in allcategory %}
+    <div class="col-12 mt-3">
+        <h2>{{cate.title}}</h2>
+    </div>
+    <hr>
+    <div class="row mb-5">
+        {% for p in cate.product_set.all %}
+        <div class="col-md-4">
+            <h3> <a href="{% url 'productDetail' p.slug %}" class="btn btn-link"> {{p.title}}</a></h3>
+            <img src="{% get_media_prefix %}{{p.image}}" width="200">
+            <br>
+            <p>Price : <strike> Rs. {{p.marked_price}}</strike> &nbsp;<strong>Rs. {{p.selling_price}}</strong></p>
+            <a href="{% url 'cart' p.id %}" class="btn btn-primary">Add to cart</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+
+</div>
+{% endblock mainbody %}

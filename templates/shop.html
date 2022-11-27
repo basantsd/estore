@@ -1,0 +1,253 @@
+{% extends 'layout/base.html' %}
+{% block mainbody %}
+{% load static %}
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option" style="padding:20px 0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text" style="display: inline-flex;">
+                    <h4>Shop</h4>
+                    <div class="breadcrumb__links" style="margin-left: 30px;">
+                        <a href="./index.html">Home</a>
+                        <span>Shop</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shop Section Begin -->
+<section class="shop spad" style="padding-top:66px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="shop__sidebar">
+                    <div class="shop__sidebar__search">
+                        <form action="#">
+                            <input type="text" placeholder="Search...">
+                            <button type="submit"><span class="icon_search"></span></button>
+                        </form>
+                    </div>
+                    <div class="shop__sidebar__accordion">
+                        <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                </div>
+                                <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories">
+                                            <ul class="nice-scroll">
+                                                {% for catelist in category_list %}
+                                                <li><a href="#">{{catelist.category__subtitle}}
+                                                        ({{catelist.id__count}})</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseTwo">Sub-Categories</a>
+                                </div>
+                                <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__brand">
+                                            <ul>
+                                                {% for subcatelist in subcategory_list %}
+                                                <li><a href="#">{{subcatelist.subcategory__subcategory_name}}
+                                                        ({{subcatelist.id__count}})</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
+                                </div>
+                                <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__price">
+                                            <ul>
+                                                <li><a href="#">$0.00 - $50.00</a></li>
+                                                <li><a href="#">$50.00 - $100.00</a></li>
+                                                <li><a href="#">$100.00 - $150.00</a></li>
+                                                <li><a href="#">$150.00 - $200.00</a></li>
+                                                <li><a href="#">$200.00 - $250.00</a></li>
+                                                <li><a href="#">250.00+</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseFour">Size</a>
+                                </div>
+                                <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__size">
+
+                                            {% for sizel in sizelist %}
+                                            <label for="{{sizel.size_name}}">{{sizel.size_name}}
+                                                <input type="radio" id="{{sizel.size_name}}">
+                                            </label>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
+                                </div>
+                                <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__color">
+
+                                            {% for colorn in colorlist %}
+                                            <label class="c-1" for="sp-1"
+                                                style="background-color:{{colorn.color_select}};">
+                                                <input type="radio" id="sp-1" value="{{colorn.color_select}}">
+                                            </label>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% comment %} <div class="card">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
+                                </div>
+                                <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__tags">
+                                            <a href="#">Product</a>
+                                            <a href="#">Bags</a>
+                                            <a href="#">Shoes</a>
+                                            <a href="#">Fashio</a>
+                                            <a href="#">Clothing</a>
+                                            <a href="#">Hats</a>
+                                            <a href="#">Accessories</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="shop__product__option">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="shop__product__option__left">
+                                <p>Showing 1–
+                                    {% if product_list.count > 12 %}
+                                    12
+                                    {% else %}
+                                    {{product_list.count}}
+                                    {% endif %} of {{product_list.count}} results</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="shop__product__option__right">
+                                <p>Sort by Price:</p>
+                                <select>
+                                    <option value="">Low To High</option>
+                                    <option value="">$0 - $55</option>
+                                    <option value="">$55 - $100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+
+                        {% for prod in product_list %}
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg"
+                                    data-setbg="{% get_media_prefix %}{{prod.image}}">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="product__item__text">
+                                            <h6><a class="btn btn-link"
+                                                    href="{% url 'productDetail' prod.slug %}">{{prod.title}} </a></h6>
+                                            <div class="rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i>
+                                            </div>
+                                            <h5>${{prod.selling_price}}</h5>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <button title="Add to cart" data-id="{{prod.id}}"
+                                            class="btn btn-primary addtocart">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </button>
+                                        <button title="Add to wishlist" class="btn btn-danger mt-1">
+                                            <i class="fa fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product__pagination">
+                            <a class="active" href="#">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <span>...</span>
+                            <a href="#">21</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+
+{% endblock mainbody %}
+
+{% block jsblock %}
+<script>
+    $('.addtocart').click(function (e) {
+        e.preventDefault();
+        var csrf_token = $("input[name='csrfmiddlewaretoken']").val()
+        var catid = $(this).attr("data-id");
+        $.ajax({
+            type: "POST",
+            url: "{% url 'cart' %}",
+            data: {
+                csrfmiddlewaretoken: csrf_token,
+                prod_id: catid
+            },
+            success: function (data) {
+
+                alert("Added")
+            }
+        })
+    });
+</script>
+{% endblock %}
