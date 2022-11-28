@@ -11,6 +11,7 @@ class Product(BaseModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand,on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.PositiveIntegerField()
     tages = models.CharField(max_length=200, null=True,blank=True)
     marked_price = models.DecimalField(decimal_places=2,max_digits=8)
@@ -19,6 +20,7 @@ class Product(BaseModel):
     size = models.ManyToManyField(Size , blank=True)
     description = HTMLField()
     specification = HTMLField()
+    is_active = models.BooleanField(default=True,help_text="Check this for 'Active'")
     
     def __str__(self):
         return self.title
@@ -27,6 +29,7 @@ class Product(BaseModel):
 class ProductImage(BaseModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_images")
     image =  models.ImageField(upload_to="product")
+    is_active = models.BooleanField(default=True,help_text="Check this for 'Active'")
     
     
 class Cart(BaseModel):

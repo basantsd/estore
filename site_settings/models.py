@@ -6,6 +6,7 @@ from core.base.models import BaseModel
 class HomeBanner(BaseModel):
     maintitle = models.CharField(max_length=100)
     title = models.CharField(max_length=200)
+    shop_link = models.URLField(null=True,blank=True,max_length=300)
     small_description = models.CharField(max_length=300)
     background_image = models.ImageField(upload_to="home_banner", help_text="1920x801 px image for fit background")
     is_active = models.BooleanField(default=True)
@@ -29,6 +30,8 @@ class BestProduct(BaseModel):
 class SiteSetting(BaseModel):
     name = models.CharField(max_length=100)
     logo = models.ImageField(upload_to='logo')
+    logo_white = models.ImageField(upload_to='logo', null=True,blank=True)
+    short_footer_details = models.CharField(max_length=100,null=True,blank=True)
     
     def __str__(self) -> str:
         return self.name
