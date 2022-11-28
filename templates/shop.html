@@ -1,6 +1,12 @@
 {% extends 'layout/base.html' %}
 {% block mainbody %}
 {% load static %}
+<style>
+    .product__item {
+        border: solid 2px #80808029;
+        padding: 3px;
+    }
+</style>
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option" style="padding:20px 0px;">
     <div class="container">
@@ -176,13 +182,13 @@
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg"
-                                    data-setbg="{% get_media_prefix %}{{prod.image}}">
+                                    data-setbg="{% get_media_prefix %}{{prod.product_images.first.image}}">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="product__item__text">
                                             <h6><a class="btn btn-link"
-                                                    href="{% url 'productDetail' prod.slug %}">{{prod.title}} </a></h6>
+                                                    href="{% url 'shop_details' prod.slug %}">{{prod.title}} </a></h6>
                                             <div class="rating">
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>

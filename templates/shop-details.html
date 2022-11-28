@@ -2,6 +2,11 @@
 
 {% block mainbody %}
 {% load static %}
+<style>
+    img {
+        width: auto;
+    }
+</style>
 <!-- Shop Details Section Begin -->
 <section class="shop-details">
     <div class="container">
@@ -178,8 +183,7 @@
                                 Previews(5)</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-7" role="tab">Additional
-                                information</a>
+                            <a class="nav-link" data-toggle="tab" href="#tabs-7" role="tab">Specifications</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -227,9 +231,11 @@
                                 </div>
                             </div>
                         </div>
-
-                        {{product.specification|safe}}
-
+                        <div class="tab-pane" id="tabs-7" role="tabpanel">
+                            <div class="product__details__tab__content">
+                                {{product.specification|safe}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

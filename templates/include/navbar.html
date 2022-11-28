@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a href="{% url 'home' %}"><img src="{% get_static_prefix %}img/logo.png" alt=""></a>
+                    <a href="{% url 'home' %}"><img src="{% get_media_prefix %}{{site_data.logo}}" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
@@ -42,7 +42,6 @@
                                 href="{% url 'shop' %}">Shop</a></li>
                         <li {% if request.path == "/about/" %} class="active" {% endif %}><a
                                 href="{% url 'about' %}">About</a> </li>
-                        <li {% if request.path == "/blog/" %} class="active" {% endif %}><a href="./blog.html">Blog</a>
                         </li>
                         <li {% if request.path == "/contact/" %} class="active" {% endif %}><a
                                 href="./contact.html">Contacts</a></li>
