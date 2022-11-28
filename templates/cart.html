@@ -1,0 +1,270 @@
+{% extends 'layout/base.html' %}
+{% block mainbody %}
+{% load static %}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shopping Cart</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Shopping Cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div {% if allcartprod and allcartprod.total != 0.00 %} class="col-lg-8" {% else %} class="col-lg-12"
+                {% endif %}>
+                <div class="shopping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                {% comment %} <th>S.No.</th> {% endcomment %}
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Rate</th>
+                                <th>Subtotal</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="Itemscart">
+                            {% if allcartprod and allcartprod.total != 0.00 %}
+                            <form method="POST">
+                                {% csrf_token %}
+
+                                {% for cp in allcartprod.cartproduct_set.all %}
+                                <tr>
+                                    <td class="product__cart__item">
+                                        <div class="product__cart__item__pic">
+                                            <img src="{% get_media_prefix %}{{cp.product.image}}" width="80" alt="">
+                                        </div>
+                                        <div class="product__cart__item__text">
+                                            <h6>{{cp.product.title}}</h6>
+                                            <h5>${{cp.product.selling_price}}</h5>
+                                        </div>
+                                    </td>
+                                    <td class="quantity__item">
+                                        <div class="quantity">
+                                            <div class="pro-qty-2">
+                                                <span class="fa fa-angle-left dec qtybtn"></span>
+                                                <input data-cid="{{cp.id}}" type="text" value="{{cp.quantity}}">
+                                                <span class="fa fa-angle-right inc qtybtn"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="cart__price">$ {{cp.product.selling_price}}</td>
+                                    <td class="cart__price" id="subtotal_{{cp.id}}">$ {{cp.subtotal}}</td>
+                                    <td class="cart__close"><button type="button" data-cid="{{cp.id}}"
+                                            class="btn btn-link removeitem"><i class="fa fa-close "></i></button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </form>
+                            {% else %}
+                            <tr>
+                                <td>No Product In Cart</td>
+                            </tr>
+                            {% endif %}
+                            {% comment %} <tr>
+                                <td class="product__cart__item">
+                                    <div class="product__cart__item__pic">
+                                        <img src="{% get_static_prefix %}img/shopping-cart/cart-2.jpg" alt="">
+                                    </div>
+                                    <div class="product__cart__item__text">
+                                        <h6>Diagonal Textured Cap</h6>
+                                        <h5>$98.49</h5>
+                                    </div>
+                                </td>
+                                <td class="quantity__item">
+                                    <div class="quantity">
+                                        <div class="pro-qty-2">
+                                            <input type="text" value="1">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="cart__price">$ 32.50</td>
+                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="product__cart__item">
+                                    <div class="product__cart__item__pic">
+                                        <img src="{% get_static_prefix %}img/shopping-cart/cart-3.jpg" alt="">
+                                    </div>
+                                    <div class="product__cart__item__text">
+                                        <h6>Basic Flowing Scarf</h6>
+                                        <h5>$98.49</h5>
+                                    </div>
+                                </td>
+                                <td class="quantity__item">
+                                    <div class="quantity">
+                                        <div class="pro-qty-2">
+                                            <input type="text" value="1">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="cart__price">$ 47.00</td>
+                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="product__cart__item">
+                                    <div class="product__cart__item__pic">
+                                        <img src="{% get_static_prefix %}img/shopping-cart/cart-4.jpg" alt="">
+                                    </div>
+                                    <div class="product__cart__item__text">
+                                        <h6>Basic Flowing Scarf</h6>
+                                        <h5>$98.49</h5>
+                                    </div>
+                                </td>
+                                <td class="quantity__item">
+                                    <div class="quantity">
+                                        <div class="pro-qty-2">
+                                            <input type="text" value="1">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="cart__price">$ 30.00</td>
+                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                            </tr> {% endcomment %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn">
+                            <a href="{% url 'shop' %}">Continue Shopping</a>
+                        </div>
+                    </div>
+                    {% if allcartprod and allcartprod.total != 0.00 %}
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn update__btn">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <a href="javascript:void(0)" id="emptycart" class="btn "> Empty Cart</a>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% if allcartprod and allcartprod.total != 0.00 %}
+            <div class="col-lg-4">
+                <div class="cart__discount">
+                    <h6>Discount codes</h6>
+                    <form action="#">
+                        <input type="text" placeholder="Coupon code">
+                        <button type="submit">Apply</button>
+                    </form>
+                </div>
+                <div class="cart__total">
+                    <h6>Cart total</h6>
+                    <ul>
+                        <li>Subtotal <span id="subtotalamount">$ {{allcartprod.total}}</span></li>
+                        <li>Total <span id="totalamount">$ {{allcartprod.total}}</span></li>
+                    </ul>
+                    <a href="{% url 'checkout' %}" class="primary-btn">Proceed to checkout</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
+
+{% endblock mainbody %}
+
+{% block jsblock %}
+<script>
+    var proQty = $('.pro-qty-2');
+    proQty.on('click', '.qtybtn', function (e) {
+        e.preventDefault();
+        let $button = $(this);
+        let cp_id = $button.parent().find('input').attr("data-cid");
+        let csrf_token = $("input[name='csrfmiddlewaretoken']").val()
+        let inc = 0;
+        let closestr = $(this).closest("tr");
+
+        if ($button.hasClass('inc')) {
+            inc = 1;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'ajax' %}",
+            data: {
+                csrfmiddlewaretoken: csrf_token,
+                cp_id: cp_id,
+                incr: inc
+            },
+            success: function (data) {
+                if (data.delete) {
+                    $("#totalamount").text('$' + data.total);
+                    $("#subtotalamount").text('$' + data.total);
+                    closestr.remove();
+                    alert("cart removed.");
+                    window.location.reload();
+                } else {
+                    $button.parent().find('input').val(data.qty);
+                    $("#subtotal_" + cp_id).text(data.subtotal);
+                    $("#totalamount").text('$' + data.total);
+                    $("#subtotalamount").text('$' + data.total);
+                    alert("Updated Cart");
+                }
+            }
+        })
+
+    });
+
+    $(".removeitem").click(function (e) {
+        e.preventDefault();
+        let cp_id = $(this).attr("data-cid");
+        let closestr = $(this).closest("tr");
+        let csrf_token = $("input[name='csrfmiddlewaretoken']").val()
+        $.ajax({
+            type: "POST",
+            url: "{% url 'ajax' %}",
+            data: {
+                csrfmiddlewaretoken: csrf_token,
+                cp_id: cp_id,
+                deleteitem: 1
+            },
+            success: function (data) {
+                $("#totalamount").text('$' + data.total);
+                $("#subtotalamount").text('$' + data.total);
+                closestr.remove();
+                alert("cart removed.")
+                window.location.reload();
+            }
+        })
+
+    })
+
+    $("#emptycart").click(function (e) {
+        e.preventDefault();
+        let csrf_token = $("input[name='csrfmiddlewaretoken']").val()
+        $.ajax({
+            type: "POST",
+            url: "{% url 'ajax' %}",
+            data: {
+                csrfmiddlewaretoken: csrf_token,
+            },
+            success: function (data) {
+                $("#Itemscart").remove();
+                alert("Cart Empty.")
+            }
+        })
+    })
+</script>
+
+{% endblock jsblock %}
