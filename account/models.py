@@ -6,7 +6,7 @@ from core.base.models import BaseModel
 class Customer(BaseModel):
     user_id = models.OneToOneField(User,on_delete=models.CASCADE)
     mobile_no = models.IntegerField(null=True,blank=True)
-    profile_pic = models.ImageField(upload_to='profile/',null=True,blank=True)
+    image = models.ImageField(upload_to='profile/',null=True,blank=True)
     is_email_verfiled = models.BooleanField(default=False)
     token = models.CharField(max_length=100,null=True,blank=True)
     is_active = models.BooleanField(default=True)
