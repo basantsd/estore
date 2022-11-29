@@ -48,8 +48,9 @@
                                         <div class="shop__sidebar__categories">
                                             <ul class="nice-scroll">
                                                 {% for catelist in category_list %}
-                                                <li><a href="#">{{catelist.category__subtitle}}
-                                                        ({{catelist.id__count}})</a></li>
+                                                <li><a
+                                                        href="{% url 'shop' %}?category={{catelist.slug}}">{{catelist.title}}</a>
+                                                </li>
                                                 {% endfor %}
                                             </ul>
                                         </div>
@@ -58,15 +59,15 @@
                             </div>
                             <div class="card">
                                 <div class="card-heading">
-                                    <a data-toggle="collapse" data-target="#collapseTwo">Sub-Categories</a>
+                                    <a data-toggle="collapse" data-target="#collapseTwo">Brands</a>
                                 </div>
                                 <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div class="shop__sidebar__brand">
                                             <ul>
-                                                {% for subcatelist in subcategory_list %}
-                                                <li><a href="#">{{subcatelist.subcategory__subcategory_name}}
-                                                        ({{subcatelist.id__count}})</a></li>
+                                                {% for brand in brand_list %}
+                                                <li><a href="{% url 'shop' %}?brand={{brand.slug}}">{{brand.title}} </a>
+                                                </li>
                                                 {% endfor %}
                                             </ul>
                                         </div>
@@ -81,34 +82,18 @@
                                     <div class="card-body">
                                         <div class="shop__sidebar__price">
                                             <ul>
-                                                <li><a href="#">$0.00 - $50.00</a></li>
-                                                <li><a href="#">$50.00 - $100.00</a></li>
-                                                <li><a href="#">$100.00 - $150.00</a></li>
-                                                <li><a href="#">$150.00 - $200.00</a></li>
-                                                <li><a href="#">$200.00 - $250.00</a></li>
+                                                <li><a href="#">Rs:0.00 - Rs:50.00</a></li>
+                                                <li><a href="#">Rs:50.00 - Rs:100.00</a></li>
+                                                <li><a href="#">Rs:100.00 - Rs:150.00</a></li>
+                                                <li><a href="#">Rs:150.00 - Rs:200.00</a></li>
+                                                <li><a href="#">Rs:200.00 - Rs:250.00</a></li>
                                                 <li><a href="#">250.00+</a></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card">
-                                <div class="card-heading">
-                                    <a data-toggle="collapse" data-target="#collapseFour">Size</a>
-                                </div>
-                                <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <div class="shop__sidebar__size">
 
-                                            {% for sizel in sizelist %}
-                                            <label for="{{sizel.size_name}}">{{sizel.size_name}}
-                                                <input type="radio" id="{{sizel.size_name}}">
-                                            </label>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="card">
                                 <div class="card-heading">
                                     <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
@@ -117,10 +102,11 @@
                                     <div class="card-body">
                                         <div class="shop__sidebar__color">
 
-                                            {% for colorn in colorlist %}
+                                            {% for colorn in color_list %}
                                             <label class="c-1" for="sp-1"
                                                 style="background-color:{{colorn.color_select}};">
-                                                <input type="radio" id="sp-1" value="{{colorn.color_select}}">
+                                                <input type="radio" id="sp-1" title="{{colorn.color_name}}"
+                                                    value="{{colorn.color_select}}">
                                             </label>
                                             {% endfor %}
                                         </div>
@@ -167,8 +153,8 @@
                                 <p>Sort by Price:</p>
                                 <select>
                                     <option value="">Low To High</option>
-                                    <option value="">$0 - $55</option>
-                                    <option value="">$55 - $100</option>
+                                    <option value="">Rs:0 - Rs:55</option>
+                                    <option value="">Rs:55 - Rs:100</option>
                                 </select>
                             </div>
                         </div>
@@ -188,7 +174,8 @@
                                     <div class="col-md-9">
                                         <div class="product__item__text">
                                             <h6><a class="btn btn-link"
-                                                    href="{% url 'shop_details' prod.slug %}">{{prod.title}} </a></h6>
+                                                    href="{% url 'shop_details' prod.slug %}">{{prod.title|truncatechars:18}}
+                                                </a></h6>
                                             <div class="rating">
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
@@ -196,7 +183,7 @@
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star-o"></i>
                                             </div>
-                                            <h5>${{prod.selling_price}}</h5>
+                                            <h5>Rs:{{prod.selling_price}}</h5>
 
                                         </div>
                                     </div>

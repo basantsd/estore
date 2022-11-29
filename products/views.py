@@ -1,14 +1,21 @@
 from django.shortcuts import render
 from django.views import View
 from .models import Product
+from shop.models import Category,Brand,Color
 
 
 class ShopView(View):
     template_name = "shop.html"
     def get(self,request,*args,**kwargs):
         context = {}
+        category_list = Category.objects.filter(is_active=True)
+        context['category_list'] = category_list
+        brand_list = Brand.objects.filter(is_active=True)
+        context['brand_list'] = brand_list
+        color_list = Color.objects.filter(is_active=True)
+        context['color_list'] = color_list
         if request.GET:
-            print(request.GET['category'])
+            print(request.GET)
         else:
             products = Product.objects.filter(is_active=True)
             context['product_list'] = products

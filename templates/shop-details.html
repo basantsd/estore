@@ -37,28 +37,6 @@
                                     </li>
 
                                     {% endfor %}
-                                    {% comment %} <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
-                                            <div class="product__thumb__pic set-bg"
-                                                data-setbg="{% get_static_prefix %}img/shop-details/thumb-2.png">
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
-                                            <div class="product__thumb__pic set-bg"
-                                                data-setbg="{% get_static_prefix %}img/shop-details/thumb-3.png">
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
-                                            <div class="product__thumb__pic set-bg"
-                                                data-setbg="{% get_static_prefix %}img/shop-details/thumb-4.png">
-                                                <i class="fa fa-play"></i>
-                                            </div>
-                                        </a>
-                                    </li> {% endcomment %}
                                 </ul>
                             </div>
                             <div class="col-lg-9 col-md-9">
@@ -71,23 +49,6 @@
                                         </div>
                                     </div>
                                     {% endfor %}
-                                    {% comment %} <div class="tab-pane" id="tabs-2" role="tabpanel">
-                                        <div class="product__details__pic__item">
-                                            <img src="{% get_static_prefix %}img/shop-details/product-big-3.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                        <div class="product__details__pic__item">
-                                            <img src="{% get_static_prefix %}img/shop-details/product-big.png" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tabs-4" role="tabpanel">
-                                        <div class="product__details__pic__item">
-                                            <img src="{% get_static_prefix %}img/shop-details/product-big-4.png" alt="">
-                                            <a href="https://www.youtube.com/watch?v=8PJ3_p7VqHw&list=RD8PJ3_p7VqHw&start_radio=1"
-                                                class="video-popup"><i class="fa fa-play"></i></a>
-                                        </div>
-                                    </div> {% endcomment %}
                                 </div>
                             </div>
                         </div>
@@ -112,16 +73,12 @@
                                             <span> - 5 Reviews</span>
                                         </div>
                                         <h3>${{product.selling_price}} <span>{{product.marked_price}}</span></h3>
-                                        <p>Coat with quilted lining and an adjustable hood. Featuring long sleeves with
-                                            adjustable
-                                            cuff tabs, adjustable asymmetric hem with elastic side tabs and a front zip
-                                            fastening
-                                            with placket.</p>
+                                        <p>{{product.description|safe|truncatewords:44}}</p>
                                         <div class="product__details__option">
-                                            {% if sizes %}
+                                            {% if product.size %}
                                             <div class="product__details__option__size">
                                                 <span>Size:</span>
-                                                {% for size in sizes %}
+                                                {% for size in product.size.all %}
                                                 <label class="mt-1" for="{{size.size_name}}">{{size.size_name}}
                                                     <input type="radio" id="{{size.size_name}}">
                                                 </label>
@@ -130,37 +87,24 @@
                                             {% endif %}
                                             <div class="product__details__option__color" style="margin-top: -18px;">
                                                 <span>Color:</span>
-                                                {% for color in colors %}
+                                                {% for colr in product.color.all %}
                                                 <label class="c-{{forloop.counter}} mt-{{forloop.counter}}"
                                                     for="sp-{{forloop.counter}}"
-                                                    style="background-color:{{color.color_select}}">
+                                                    style="background-color:{{colr.color_select}}">
                                                     <input type="radio" id="sp-{{forloop.counter}}">
                                                 </label>
                                                 {% endfor %}
                                             </div>
                                         </div>
                                         <div class="product__details__cart__option">
-                                            {% comment %} <div class="quantity">
+                                            <div class="quantity">
                                                 <div class="pro-qty">
                                                     <input type="text" value="1">
                                                 </div>
-                                            </div> {% endcomment %}
+                                            </div>
                                             <button type='button' data-id="{{product.id}}"
                                                 class="primary-btn addtocartprod">add to
                                                 cart</button>
-                                        </div>
-                                        <div class="product__details__btns__option">
-                                            <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
-                                        </div>
-                                        <div class="product__details__last__option">
-                                            <h5><span>Guaranteed Safe Checkout</span></h5>
-                                            <img src="{% get_static_prefix %}img/shop-details/details-payment.png"
-                                                alt="">
-                                            <ul>
-                                                <li><span>SKU:</span> 3812912</li>
-                                                <li><span>Categories:</span> Clothes</li>
-                                                <li><span>Tag:</span> Clothes, Skin, Body</li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -169,6 +113,20 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <div class="col-12 text-center">
+                <div class="product__details__content">
+                    <div class="container">
+                        <div class="product__details__last__option">
+                            <h5><span>Guaranteed Safe Checkout</span></h5>
+                            <img src="{% get_static_prefix %}img/shop-details/details-payment.png" alt="">
+                            <ul>
+                                <li><span>Categories:</span> {{product.category.title}}</li>
+                                <li><span>Tag:</span> {{product.tages}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">

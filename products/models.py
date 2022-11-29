@@ -3,13 +3,13 @@ from shop.models import *
 from account.models import Customer,CustomerAddress
 from core.base.models import BaseModel
 from account.models import User
-
+from django.utils.text import slugify
 
 
 # Create your models here.
 class Product(BaseModel):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True,null=True,blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand,on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.PositiveIntegerField()
@@ -22,6 +22,10 @@ class Product(BaseModel):
     specification = HTMLField()
     is_active = models.BooleanField(default=True,help_text="Check this for 'Active'")
     
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Product, self).save(*args, **kwargs)
+        
     def __str__(self):
         return self.title
     

@@ -25,3 +25,9 @@ class CategoryAdmin(BaseAdmin):
 class SizeAdmin(BaseAdmin):
     list_display = ['size_name', 'size_detail' , 'price','is_active']
     model = Size
+
+
+@admin.register(ContactUs)
+class ContactUsAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email' , 'message','created_at']
+    model = ContactUs
