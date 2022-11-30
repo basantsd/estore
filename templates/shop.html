@@ -32,9 +32,9 @@
             <div class="col-lg-3">
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
-                        <form action="#">
-                            <input type="text" placeholder="Search...">
-                            <button type="submit"><span class="icon_search"></span></button>
+                        <form onSubmit="return searchprod()">
+                            <input type="text" id="serchtext" placeholder="Search...">
+                            <button id="searchproduct" type="submit"><span class="icon_search"></span></button>
                         </form>
                     </div>
                     <div class="shop__sidebar__accordion">
@@ -82,12 +82,17 @@
                                     <div class="card-body">
                                         <div class="shop__sidebar__price">
                                             <ul>
-                                                <li><a href="#">Rs:0.00 - Rs:50.00</a></li>
-                                                <li><a href="#">Rs:50.00 - Rs:100.00</a></li>
-                                                <li><a href="#">Rs:100.00 - Rs:150.00</a></li>
-                                                <li><a href="#">Rs:150.00 - Rs:200.00</a></li>
-                                                <li><a href="#">Rs:200.00 - Rs:250.00</a></li>
-                                                <li><a href="#">250.00+</a></li>
+                                                <li><a href="{% url 'shop' %}?srate=0&erate=200">Rs:0.00 - Rs:200.00</a>
+                                                </li>
+                                                <li><a href="{% url 'shop' %}?srate=200&erate=500">Rs:200.00 -
+                                                        Rs:500.00</a></li>
+                                                <li><a href="{% url 'shop' %}?srate=500&erate=800">Rs:500.00 -
+                                                        Rs:800.00</a></li>
+                                                <li><a href="{% url 'shop' %}?srate=800&erate=1000">Rs:800.00 -
+                                                        Rs:1000.00</a></li>
+                                                <li><a href="{% url 'shop' %}?srate=1000&erate=2000">Rs:1000.00 -
+                                                        Rs:2000.00</a></li>
+                                                <li><a href="{% url 'shop' %}?srate=2000&erate=0">2000.00+</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -103,11 +108,17 @@
                                         <div class="shop__sidebar__color">
 
                                             {% for colorn in color_list %}
-                                            <label class="c-1" for="sp-1"
-                                                style="background-color:{{colorn.color_select}};">
-                                                <input type="radio" id="sp-1" title="{{colorn.color_name}}"
-                                                    value="{{colorn.color_select}}">
-                                            </label>
+
+                                            <a href="{% url 'shop' %}?color={{colorn.color_name}}">
+                                                <label class="c-1" for="sp-1"
+                                                    style="background-color:{{colorn.color_select}};">
+
+                                                    <input type="radio" id="sp-1" title="{{colorn.color_name}}"
+                                                        value="{{colorn.color_select}}">
+                                                </label>
+                                            </a>
+
+
                                             {% endfor %}
                                         </div>
                                     </div>
@@ -151,10 +162,15 @@
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="shop__product__option__right">
                                 <p>Sort by Price:</p>
-                                <select>
-                                    <option value="">Low To High</option>
-                                    <option value="">Rs:0 - Rs:55</option>
-                                    <option value="">Rs:55 - Rs:100</option>
+                                <select id="sortproducts">
+                                    <option {% if request.GET.sort == 'l_h' %} selected {% endif %} value="l_h">
+                                        Low To High</option>
+                                    <option {% if request.GET.sort == 'h_l' %} selected {% endif %} value="h_l">
+                                        High To Low</option>
+                                    <option {% if request.GET.sort == 'a_z' %} selected {% endif %} value="a_z">A
+                                        to Z</option>
+                                    <option {% if request.GET.sort == 'z_a' %} selected {% endif %} value="z_a">Z
+                                        to A</option>
                                 </select>
                             </div>
                         </div>
@@ -224,6 +240,27 @@
 {% endblock mainbody %}
 
 {% block jsblock %}
+<script>
+    $("#searchproduct").click(function (e) {
+        e.preventDefault();
+        searchprod();
+    })
+
+    function searchprod() {
+        let serchtext = $("#serchtext").val()
+        url = `{% url 'shop' %}?q=${serchtext}`
+        window.location.replace(url)
+    }
+
+
+
+    $("#sortproducts").change(function (e) {
+        let selectedval = $(this).val()
+        url = `{% url 'shop' %}?sort=${selectedval}`
+        window.location.replace(url)
+    })
+</script>
+
 <script>
     $('.addtocart').click(function (e) {
         e.preventDefault();
