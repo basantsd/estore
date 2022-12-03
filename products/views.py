@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
-from .models import Product
+from account.models import Customer
+from .models import Product,Cart,CartProduct
 from shop.models import Category,Brand,Color
 
 
@@ -71,14 +72,18 @@ class ShopDetailView(View):
 class CartView(View):
     template_name = "cart.html"
     def get(self,request,*args,**kwargs):
-        return render(request,self.template_name)
+        if request.user.is_authenticated and not request.user.is_staff:
+            customer =  Customer.objects.get(user_id = request.user) 
+            cart_list = Cart.objects.get(customer=customer)
+            return render(request,self.template_name,{'allcartprod':cart_list})
+        else:
+            return redirect("login")
     
 class CheckoutView(View):
     template_name = "checkout.html"
     def get(self,request,*args,**kwagrs):
-        return render(request, self.template_name)
+        # return render(request, self.template_name)
+        return redirect("cart")
     
     
-class AjaxView(View):
-    pass
 
