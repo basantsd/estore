@@ -44,8 +44,8 @@ class Cart(BaseModel):
         return "Cart: "+str(self.id)
     
 class CartProduct(BaseModel):
-    cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
-    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart,on_delete=models.CASCADE, related_name='cartproduct')
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='product')
     rate = models.PositiveIntegerField()
     quantity = models.PositiveIntegerField()
     subtotal = models.DecimalField(decimal_places=2,max_digits=8)
@@ -65,8 +65,8 @@ class Order(BaseModel):
     cart = models.OneToOneField(Cart,on_delete=models.CASCADE)
     ordered_by = models.ForeignKey(User,on_delete=models.CASCADE,max_length=200)
     mobile = models.CharField(max_length=10)
-    shipping_address = models.ForeignKey(CustomerAddress,limit_choices_to={'address_type':'ship'},on_delete=models.PROTECT,null=True,blank=True)
-    # billing_address = models.ForeignKey(CustomerAddress,limit_choices_to={'address_type':'bill'},on_delete=models.PROTECT)
+    shipping_address = models.ForeignKey(CustomerAddress,limit_choices_to={'address_type':'ship'},on_delete=models.PROTECT, related_name="pship",null=True,blank=True)
+    billing_address = models.ForeignKey(CustomerAddress,limit_choices_to={'address_type':'bill'},on_delete=models.PROTECT, related_name="pbill",null=True,blank=True)
     subtotal = models.DecimalField(decimal_places=2,max_digits=8,default=0)
     discount = models.DecimalField(decimal_places=2,max_digits=8)
     total = models.DecimalField(decimal_places=2,max_digits=8)

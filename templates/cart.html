@@ -43,12 +43,12 @@
                             {% if allcartprod and allcartprod.total != 0.00 %}
                             <form method="POST">
                                 {% csrf_token %}
-
-                                {% for cp in allcartprod.cartproduct_set.all %}
+                                {% for cp in allcartprod.cartproduct.all %}
                                 <tr>
                                     <td class="product__cart__item">
                                         <div class="product__cart__item__pic">
-                                            <img src="{% get_media_prefix %}{{cp.product.image}}" width="80" alt="">
+                                            <img src="{% get_media_prefix %}{{cp.product.product_images.first.image}}"
+                                                width="80" alt="">
                                         </div>
                                         <div class="product__cart__item__text">
                                             <h6>{{cp.product.title}}</h6>
@@ -77,66 +77,6 @@
                                 <td>No Product In Cart</td>
                             </tr>
                             {% endif %}
-                            {% comment %} <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="{% get_static_prefix %}img/shopping-cart/cart-2.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Diagonal Textured Cap</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 32.50</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="{% get_static_prefix %}img/shopping-cart/cart-3.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Basic Flowing Scarf</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 47.00</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="{% get_static_prefix %}img/shopping-cart/cart-4.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Basic Flowing Scarf</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 30.00</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr> {% endcomment %}
                         </tbody>
                     </table>
                 </div>
@@ -201,7 +141,7 @@
 
         $.ajax({
             type: "POST",
-            url: "{% url 'ajax' %}",
+            url: "{% url 'cartajax' %}",
             data: {
                 csrfmiddlewaretoken: csrf_token,
                 cp_id: cp_id,
@@ -233,7 +173,7 @@
         let csrf_token = $("input[name='csrfmiddlewaretoken']").val()
         $.ajax({
             type: "POST",
-            url: "{% url 'ajax' %}",
+            url: "{% url 'cartajax' %}",
             data: {
                 csrfmiddlewaretoken: csrf_token,
                 cp_id: cp_id,
@@ -255,7 +195,7 @@
         let csrf_token = $("input[name='csrfmiddlewaretoken']").val()
         $.ajax({
             type: "POST",
-            url: "{% url 'ajax' %}",
+            url: "{% url 'emptyCart' %}",
             data: {
                 csrfmiddlewaretoken: csrf_token,
             },

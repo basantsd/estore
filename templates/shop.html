@@ -189,6 +189,7 @@
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="product__item__text">
+
                                             <h6><a class="btn btn-link"
                                                     href="{% url 'shop_details' prod.slug %}">{{prod.title|truncatechars:18}}
                                                 </a></h6>
@@ -256,7 +257,7 @@
 
     $("#sortproducts").change(function (e) {
         let selectedval = $(this).val()
-        url = `{% url 'shop' %}?sort=${selectedval}`
+        let url = `{% url 'shop' %}?sort=${selectedval}`
         window.location.replace(url)
     })
 </script>
@@ -268,14 +269,24 @@
         var catid = $(this).attr("data-id");
         $.ajax({
             type: "POST",
-            url: "{% url 'cart' %}",
+            url: "{% url 'ajax' %}",
             data: {
                 csrfmiddlewaretoken: csrf_token,
                 prod_id: catid
             },
             success: function (data) {
+                if (data.success == 1) {
+                    alert(data.msg)
+                } else {
+                    if (data.render == 1) {
+                        alert("Login Required .")
+                        let url = `{% url 'login' %}`;
+                        window.location.replace(url);
+                    } else {
+                        alert("Something Went Wrong .")
+                    }
+                }
 
-                alert("Added")
             }
         })
     });
